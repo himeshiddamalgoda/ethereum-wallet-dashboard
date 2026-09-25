@@ -177,11 +177,21 @@ export function TransferForm({
     if (!review || !isSepolia) return;
 
     try {
-      await transaction.mutateAsync({
+      const hash = await transaction.mutateAsync({
         chainId: sepolia.id,
         to: review.to,
         value: review.value,
       });
+
+      const confirmedReceipt = await publicClient?.waitForTransactionReceipt({
+        hash,
+      });
+
+      if (confirmedReceipt?.status === "success") {
+        setReceiver("");
+        setAmount("");
+        setReview(null);
+      }
     } catch {
       // Wagmi exposes rejected and failed requests through transaction.error.
     }
