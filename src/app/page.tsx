@@ -85,6 +85,14 @@ export default function Home() {
                           : "0"
                       } ${balance.data?.symbol ?? "ETH"}`}
                 </p>
+                <button
+                  className="mt-3 text-sm font-medium text-indigo-300 transition hover:text-indigo-200 disabled:cursor-not-allowed disabled:opacity-60"
+                  disabled={balance.isFetching}
+                  onClick={() => balance.refetch()}
+                  type="button"
+                >
+                  {balance.isFetching ? "Refreshing…" : "Refresh balance"}
+                </button>
               </div>
             </div>
 
