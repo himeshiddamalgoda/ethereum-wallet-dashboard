@@ -32,18 +32,23 @@ export default function Home() {
   const networkName =
     connection.chain?.name ?? `Unknown network (${connection.chainId})`;
 
+  function openInMetaMaskMobile() {
+    const dappUrl = `${window.location.host}${window.location.pathname}${window.location.search}`;
+    window.location.assign(`https://metamask.app.link/dapp/${dappUrl}`);
+  }
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-950 px-6 py-16 text-slate-100">
-      <section className="w-full max-w-3xl rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-indigo-950/30 backdrop-blur sm:p-12">
-        <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+    <main className="flex min-h-screen items-start justify-center bg-slate-950 px-3 py-4 text-slate-100 sm:px-6 sm:py-10 lg:items-center lg:py-16">
+      <section className="w-full max-w-3xl overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/80 p-4 shadow-2xl shadow-indigo-950/30 backdrop-blur sm:rounded-3xl sm:p-8 lg:p-12">
+        <div className="mb-7 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-start sm:justify-between sm:gap-5">
           <div>
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-indigo-400">
               Sepolia testnet
             </p>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            <h1 className="text-2xl font-semibold tracking-tight sm:text-4xl">
               Ethereum Wallet Dashboard
             </h1>
-            <p className="mt-3 max-w-xl text-slate-400">
+            <p className="mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base">
               Connect MetaMask to view your wallet address and testnet ETH
               balance.
             </p>
@@ -55,7 +60,7 @@ export default function Home() {
 
         {isConnected && connection.address ? (
           <div className="space-y-5">
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
               <div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-5">
                 <p className="text-sm text-slate-500">Connected wallet</p>
                 <p className="mt-2 break-all font-mono text-sm text-slate-100">
@@ -120,7 +125,7 @@ export default function Home() {
             />
 
             <button
-              className="rounded-xl border border-slate-700 px-5 py-3 font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800"
+              className="w-full rounded-xl border border-slate-700 px-5 py-3 font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800 sm:w-auto"
               onClick={() => disconnect()}
               type="button"
             >
@@ -128,12 +133,12 @@ export default function Home() {
             </button>
           </div>
         ) : (
-          <div className="rounded-2xl border border-dashed border-slate-700 bg-slate-950/40 p-8 text-center">
+          <div className="rounded-2xl border border-dashed border-slate-700 bg-slate-950/40 p-5 text-center sm:p-8">
             <p className="text-slate-400">
               Your wallet is not connected yet.
             </p>
             <button
-              className="mt-5 rounded-xl bg-indigo-500 px-6 py-3 font-semibold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-5 w-full rounded-xl bg-indigo-500 px-6 py-3 font-semibold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
               disabled={!metaMask || isPending}
               onClick={() =>
                 metaMask &&
@@ -143,6 +148,17 @@ export default function Home() {
             >
               {isPending ? "Connecting…" : "Connect MetaMask"}
             </button>
+            <button
+              className="mt-3 w-full rounded-xl border border-indigo-400/40 px-6 py-3 font-semibold text-indigo-200 transition hover:bg-indigo-400/10 sm:hidden"
+              onClick={openInMetaMaskMobile}
+              type="button"
+            >
+              Open in MetaMask Mobile
+            </button>
+            <p className="mt-3 text-xs leading-5 text-slate-500 sm:hidden">
+              If this browser cannot detect your wallet, open the dashboard in
+              MetaMask Mobile and connect there.
+            </p>
             {!metaMask && (
               <p className="mt-4 text-sm text-amber-300">
                 Install the MetaMask browser extension to continue.

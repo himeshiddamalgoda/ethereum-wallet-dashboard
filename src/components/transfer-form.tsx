@@ -198,7 +198,7 @@ export function TransferForm({
   }
 
   return (
-    <section className="rounded-2xl border border-slate-800 bg-slate-950/40 p-6">
+    <section className="rounded-2xl border border-slate-800 bg-slate-950/40 p-4 sm:p-6">
       <div className="mb-6">
         <h2 className="text-xl font-semibold text-slate-100">Transfer ETH</h2>
         <p className="mt-1 text-sm text-slate-400">
@@ -251,7 +251,7 @@ export function TransferForm({
         )}
 
         <button
-          className="rounded-xl bg-indigo-500 px-5 py-3 font-semibold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full rounded-xl bg-indigo-500 px-5 py-3 font-semibold text-white transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
           disabled={isReviewing || transaction.isPending}
           type="submit"
         >
@@ -269,11 +269,11 @@ export function TransferForm({
                 {review.to}
               </dd>
             </div>
-            <div className="flex justify-between gap-4">
+            <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-4">
               <dt className="text-slate-500">Amount</dt>
               <dd className="text-slate-200">{review.amount} ETH</dd>
             </div>
-            <div className="flex justify-between gap-4">
+            <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-4">
               <dt className="text-slate-500">Estimated fee</dt>
               <dd className="text-slate-200">
                 {formatEther(review.estimatedFee)} ETH
