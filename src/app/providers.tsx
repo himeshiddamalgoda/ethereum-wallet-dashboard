@@ -3,14 +3,16 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState, type ReactNode } from "react";
 import { Provider as ReduxProvider } from "react-redux";
+import { WagmiProvider } from "wagmi";
 
+import { wagmiConfig } from "@/lib/wagmi";
 import { makeStore } from "@/store/store";
 
-type AppProvidersProps = {
+type ProvidersProps = {
   children: ReactNode;
 };
 
-export function AppProviders({ children }: AppProvidersProps) {
+export function Providers({ children }: ProvidersProps) {
   const [store] = useState(makeStore);
   const [queryClient] = useState(
     () =>
@@ -26,9 +28,13 @@ export function AppProviders({ children }: AppProvidersProps) {
   );
 
   return (
-    <ReduxProvider store={store}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </ReduxProvider>
+    <WagmiProvider config={wagmiConfig}>
+      <ReduxProvider store={store}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </ReduxProvider>
+    </WagmiProvider>
   );
 }
 
