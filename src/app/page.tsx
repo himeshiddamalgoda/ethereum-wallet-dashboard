@@ -10,6 +10,8 @@ import {
 import { sepolia } from "wagmi/chains";
 import { formatUnits } from "viem";
 
+import { TransferForm } from "@/components/transfer-form";
+
 export default function Home() {
   const connection = useConnection();
   const balance = useBalance({
@@ -102,6 +104,12 @@ export default function Home() {
                 )}
               </div>
             )}
+
+            <TransferForm
+              address={connection.address}
+              balance={balance.data?.value}
+              isSepolia={isSepolia}
+            />
 
             <button
               className="rounded-xl border border-slate-700 px-5 py-3 font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800"
