@@ -26,16 +26,13 @@ export default function Home() {
     mutate: switchChain,
   } = useSwitchChain();
 
-  const metaMask = connectors.find((connector) => connector.id === "metaMask");
+  const metaMask =
+    connectors.find((connector) => connector.id === "metaMaskSDK") ??
+    connectors.find((connector) => connector.id === "metaMask");
   const isConnected = connection.status === "connected";
   const isSepolia = connection.chainId === sepolia.id;
   const networkName =
     connection.chain?.name ?? `Unknown network (${connection.chainId})`;
-
-  function openInMetaMaskMobile() {
-    const dappUrl = `${window.location.host}${window.location.pathname}${window.location.search}`;
-    window.location.assign(`https://metamask.app.link/dapp/${dappUrl}`);
-  }
 
   return (
     <main className="flex min-h-screen items-start justify-center bg-slate-950 px-3 py-4 text-slate-100 sm:px-6 sm:py-10 lg:items-center lg:py-16">
@@ -148,16 +145,9 @@ export default function Home() {
             >
               {isPending ? "Connecting…" : "Connect MetaMask"}
             </button>
-            <button
-              className="mt-3 w-full rounded-xl border border-indigo-400/40 px-6 py-3 font-semibold text-indigo-200 transition hover:bg-indigo-400/10 sm:hidden"
-              onClick={openInMetaMaskMobile}
-              type="button"
-            >
-              Open in MetaMask Mobile
-            </button>
             <p className="mt-3 text-xs leading-5 text-slate-500 sm:hidden">
-              If this browser cannot detect your wallet, open the dashboard in
-              MetaMask Mobile and connect there.
+              MetaMask will open to approve the mobile connection. Return to
+              this browser after approval.
             </p>
             {!metaMask && (
               <p className="mt-4 text-sm text-amber-300">
